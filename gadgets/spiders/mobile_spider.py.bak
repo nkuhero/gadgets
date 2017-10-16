@@ -1,0 +1,18 @@
+import scrapy
+import redis
+import json
+rc = redis.Redis(host='127.0.0.1')
+
+class MobileSpider(scrapy.Spider):
+    name = "mobile"
+    allowed_domains = ["gadgets.ndtv.com"]
+    start_urls = [
+      "http://gadgets.ndtv.com/mobiles/reviews"
+    ]
+    
+    def parse(self, response):
+        mobile_url_list = []
+        for sel in response.xpath('//div[@class="story_list row margin_b20"]/ul/li/div[@class="caption_box"]'):
+            link = sel.xpath('a/@href').extract() 
+            mobile_url_list.append(link[0])
+        rc.set("mobile_url_list", json.dumps(mobile_url_list))
