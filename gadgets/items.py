@@ -14,4 +14,6 @@ class GadgetsItem(scrapy.Item):
     mainPic = scrapy.Field()
     highlights = scrapy.Field()
     desc = scrapy.Field()
-
+    content = scrapy.Field()
+    review = scrapy.Field()
+    keySpecs = scrapy.Field()

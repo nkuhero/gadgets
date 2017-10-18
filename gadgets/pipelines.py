@@ -17,9 +17,9 @@ class GadgetsPipeline(object):
     def process_item(self, item, spider):
         gagets_mobile_list = json.loads(self.rc.get("gadgets_mobile_list"))
         if item["title"] not in gagets_mobile_list:
-            gagets_mobile_list.append(item["title"])
+            gagets_mobile_list.append([item["title"], hash(item["title"])])
             self.rc.set("gadgets_mobile_list", json.dumps(gagets_mobile_list))
-        self.rc.set(item["title"], json.dumps(dict(item))) 
+        self.rc.set(hash(item["title"]), json.dumps(dict(item))) 
         return item
 
 
